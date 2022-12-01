@@ -1,6 +1,10 @@
+using System.Text;
 using API.Data;
+using API.Extensions;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -18,12 +22,9 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options =>{
-                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
             services.AddControllers();
-            services.AddCors();
-            services.AddScoped<ITokenService, Services.TokenService>();
+            services.AddApplicationServices(Configuration);
+            services.AddIdentityServices(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
@@ -44,9 +45,12 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
-                                            //any method (PUT, POST, GET) as long as it comes from origin 4200
-            app.UseAuthorization();
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
+                .WithOrigins("http://localhost:4200"));
+                //any method (PUT, POST, GET) as long as it comes from origin 4200
+
+            app.UseAuthentication(); // do you have a valid token?
+            app.UseAuthorization();  // what are you allowed to do
 
             app.UseEndpoints(endpoints =>
             {

@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using API.Entities;
 using API.Interfaces;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services
@@ -11,13 +11,14 @@ namespace API.Services
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        public TokenService(IConfiguration config)
+        public TokenService(IConfiguration config, UserManager<AppUser> userManager)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
+        
         public string CreateToken(AppUser user)
         {
-            var claims = List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
             };
