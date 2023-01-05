@@ -7,11 +7,16 @@
             <button class="btn btn-primary btn-info btn-lg ">Learn more</button>
         </div>
     </div>
-
+    <!-- <div class="mb-3">
+        <label>Who is your favorite user?</label>
+        <select class="form-select">
+            <option *ngFor="let user of usersFromHomeComponent" [value]="user.userName">{{user.userName}}</option>
+        </select>
+    </div> -->
     <div *ngIf="registerMode" class="constainer">
         <div class="row justify-content-center">
             <div class="col-4">
-                <app-register></app-register>
+                <app-register [usersFromHomeComponent]="users" (cancelRegister)="cancelRegisterMode($event)"></app-register>
             </div>
         </div>
     </div>

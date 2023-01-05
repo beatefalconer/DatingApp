@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { responseHooks } from 'insomnia-plugin-save-variables';
+import { User } from '../_models/user';
+import { AccountService } from '../_services/account.service';
+//import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-register',
@@ -6,18 +10,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  //@Input() usersFromHomeComponent: any;
+  @Output() cancelRegister = new EventEmitter(); 
   model: any = {}
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
   }
 
-  register () {
-    console.log(this.model);
+  register(model: any) {
+    return this.accountService.register(this.model).subscribe({
+      next: response => {
+        console.log(response);
+        this.cancel();
+      },
+      error: error => console.log(error)
+    })
   }
 
   cancel () {
-    console.log('cancelled');
+    //console.log('cancelled');
+    this.cancelRegister.emit(false);
   }
 }
