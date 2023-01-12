@@ -1,6 +1,6 @@
-
 using API.Data;
 using API.Interfaces;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -14,7 +14,7 @@ namespace API.Extensions
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
             services.AddCors();
-            services.AddScoped<ITokenService, Services.TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
             }

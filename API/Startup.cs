@@ -1,10 +1,4 @@
-using System.Text;
-using API.Data;
 using API.Extensions;
-using API.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace API

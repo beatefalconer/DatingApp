@@ -22,10 +22,11 @@ export class RegisterComponent implements OnInit {
   register(model: any) {
     return this.accountService.register(this.model).subscribe({
       next: response => {
-        console.log(response);
+        //console.log(response);
         this.cancel();
       },
-      error: error => console.log(error)
+      error: error => {console.log(error),
+      console.log(error)}
     })
   }
 
