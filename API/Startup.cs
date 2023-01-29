@@ -1,4 +1,5 @@
 using API.Extensions;
+using API.Middleware;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -39,6 +40,8 @@ namespace API
 
             app.UseRouting();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
                 .WithOrigins("http://localhost:4200"));
                 //any method (PUT, POST, GET) as long as it comes from origin 4200
