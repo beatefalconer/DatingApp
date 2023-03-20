@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Extensions;
 
 namespace API.Entities
@@ -26,8 +21,8 @@ namespace API.Entities
         //equivalent to
         //public List<Photo> Photos {get; set;} = new List<Photo>();
 
-        public int GetAge() {
-            return DateOfBirth.CalculateAge();
-        }
+        // public int GetAge() {
+        //     return DateOfBirth.CalculateAge();
+        // }
     }
 }
